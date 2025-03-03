@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    command: python TaskManagementSystem/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/tmsapp
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgresdb
+  postgresdb:
+    image: postgres:17
+    container_name: postgresdb
+    environment:
+      POSTGRES_DB: task_management_system
+      POSTGRES_PASSWORD: demo
+    ports:
+      - "5432:5432"

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--The home page for this task management system-->
+<html>
+<head>
+    <!--Loads static files and Bootstrap library-->
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Started On</th>
+            <th scope="col">Completed On</th>
+        </thead>
+        <tbody>
+            <!--Retrieves list of tasks from the home() function in views.py-->
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.created_on }}</td>
+                <td>{{ task.started_on }}</td>
+                <td>{{ task.completed_on }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!--Defines the styles for the modal with the submit form-->
+    <div id="new_task_modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Task</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <!--Title of task-->
+                        <div class="form-group">
+                            <label for="task_title">Title</label>
+                            <input id="task_title" name="task_title" type="text" class="form-control" required>
+                        </div>
+                        <!--Task description-->
+                        <div class="form-group">
+                            <label for="task_description">Description</label>
+                            <textarea id="task_description" name="task_description" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <!--Selection dropdown for task priority-->
+                        <div class="form-group">
+                            <label for="priority_select">Priority</label>
+                            <select id="priority_select" name="priority_select" class="form-select" aria-label="Please select a priority level">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <!--User declares whether they have started the task immediately or not-->
+                        <div class="form-check">
+                            <input id="started_checkbox" name="started_checkbox" class="form-check-input" type="checkbox" value=""/>
+                            <label for="started_checkbox" class="form-check-label">Started</label>
+                        </div>
+                        <!--Submit form or cancel new task-->
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Add Task"/>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Click button to open modal for creating a new task-->
+    <button id="add_task" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#new_task_modal">
+        Create New Task
+    </button>
+</body>
+</html>

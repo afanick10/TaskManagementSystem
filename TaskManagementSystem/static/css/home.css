@@ -1,0 +1,9 @@
+#add_task {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
