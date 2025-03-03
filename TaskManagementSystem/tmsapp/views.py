@@ -1,12 +1,16 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from .models import Task
 
 import datetime
 import time
 
-# Create your views here.
+# View for the home page where the table
+# listing all created tasks are displayed.
 def home(request):
+    # checks if form was submitted
     if request.method == 'POST':
+        # Retrieves user input on form to store
+        # in the database.
         post_request = request.POST
         title = post_request.get('task_title')
         description = post_request.get('task_description')
@@ -20,6 +24,8 @@ def home(request):
         completed = False
         completed_on = 'Not completed'
 
+        # Passes field values to instance
+        # of Task modal.
         task = Task()
         task.title = title
         task.description = description
@@ -30,8 +36,14 @@ def home(request):
         task.completed = completed
         task.completed_on = completed_on
         
+        # Inserts a new task record in the
+        # tmsapp_task table in the
+        # task_management_system database.
         task.save()
 
+    # Retrieves all tasks and their corresponding
+    # data from database to be displayed on the
+    # home page table.
     all_tasks = Task.objects.all()
     context = { 'tasks' : all_tasks }
         

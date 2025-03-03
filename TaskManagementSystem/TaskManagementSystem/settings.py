@@ -78,12 +78,13 @@ WSGI_APPLICATION = 'TaskManagementSystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Used to connect to a PostgreSQL database.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'task_management_system',
         'USER': 'postgres',
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'), # Note: you will need to store your password as an environment variable to access it.
         'HOST': 'localhost',
         'PORT': '5432'
     }

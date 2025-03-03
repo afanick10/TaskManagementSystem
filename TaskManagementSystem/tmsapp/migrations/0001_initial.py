@@ -10,6 +10,9 @@ class Migration(migrations.Migration):
     dependencies = [
     ]
 
+    # Task modal migrations with all fields for
+    # setting up the tmsapp_task table in the
+    # database.
     operations = [
         migrations.CreateModel(
             name='Task',
