@@ -6,7 +6,6 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
-    <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -21,9 +20,20 @@
             <th scope="col">Completed On</th>
         </thead>
         <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.created_on }}</td>
+                <td>{{ task.started_on }}</td>
+                <td>{{ task.completed_on }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -33,33 +43,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="" method="post">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="task_title">Title</label>
-                            <input id="task_title" type="text" class="form-control" required>
+                            <input id="task_title" name="task_title" type="text" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="task_description">Description</label>
-                            <textarea id="task_description" class="form-control" rows="3" required></textarea>
+                            <textarea id="task_description" name="task_description" class="form-control" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="priority_select">Priority</label>
-                            <select id="priority_select" class="form-select" aria-label="Please select a priority level">
-                                <option selected>Please select a priority level</option>
+                            <select id="priority_select" name="priority_select" class="form-select" aria-label="Please select a priority level">
                                 <option value="Low">Low</option>
                                 <option value="Medium">Medium</option>
                                 <option value="High">High</option>
                             </select>
                         </div>
                         <div class="form-check">
-                            <input id="started_checkbox" class="form-check-input" type="checkbox" value=""/>
+                            <input id="started_checkbox" name="started_checkbox" class="form-check-input" type="checkbox" value=""/>
                             <label for="started_checkbox" class="form-check-label">Started</label>
                         </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Add Task"/>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Add Task</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
